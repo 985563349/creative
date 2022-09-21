@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konami Code</title>
+    <style>
+      body {
+        background-color: #c6d8d3;
+        padding: 30px;
+      }
+
+      h1,
+      p,
+      a {
+        font-family: sans-serif;
+      }
+
+      h1 {
+        font-size: 76px;
+        color: #5b6361;
+      }
+
+      p {
+        font-size: 24px;
+        color: #353a39;
+        cursor: pointer;
+        margin-bottom: 3em;
+      }
+
+      a {
+        padding: 10px;
+        font-size: 24px;
+        background-color: #5b6361;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        background-color: #353a39;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Konami Code</h1>
+      <p>Click here to give the page focus and enter the Konami code!</p>
+      <a href="https://forum.kirupa.com">Learn More</a>
+    </div>
+
+    <script>
+      let keys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down',
+        65: 'a',
+        66: 'b',
+      };
+
+      let konamiCode = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right', 'b', 'a'];
+      let keyCount = 0;
+
+      let timerID;
+
+      document.addEventListener('keydown', checkCode, false);
+
+      function checkCode(e) {
+        let keyPressed = keys[e.keyCode];
+
+        if (keyPressed === konamiCode[keyCount]) {
+          keyCount++;
+
+          // clear timer
+          window.clearTimeout(timerID);
+
+          // start timer with a 1 second delay before resetting state
+          timerID = window.setTimeout(resetKeyState, 1000);
+
+          // check if we are still on the right path
+          if (keyCount === konamiCode.length) {
+            cheatCodeActivated();
+            resetKeyState();
+          }
+        } else {
+          resetKeyState();
+        }
+      }
+
+      function cheatCodeActivated() {
+        alert('Cheat code activated!');
+      }
+
+      function resetKeyState() {
+        console.log('Resetting state!');
+        window.clearTimeout(timerID);
+        keyCount = 0;
+      }
+    </script>
+  </body>
+</html>
